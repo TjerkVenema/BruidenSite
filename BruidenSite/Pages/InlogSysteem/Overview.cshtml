@@ -1,0 +1,42 @@
+﻿@page
+@model BruidenSite.Pages.InlogSysteem.Overview
+
+@{
+}
+
+<!DOCTYPE html>
+
+<header>
+    <link rel="stylesheet" href="~/css/Overview.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</header>
+
+<body class="background-website">
+    <div class="centerRectangle">
+        <h1 class="kop">Fijne Bruiloft</h1>   
+    </div>
+    <div class="container.fluid padding-top">
+        <div class="row">
+            <div class="col-5 background-div">
+                <h1 class="centercontent">WensenLijst</h1>
+                <h6>klik hier om uw wensenlijst te bekijken</h6>
+                <a class="btn btn-primary" href="/InlogSysteem/WensenLijstAdd" >Bekijk</a>
+                
+                <h6>Wilt u de wensenlijst van iemand anders bekijken? vul dan hier hun unieke code in</h6>
+                <input type="text" placeholder="Unieke code"/> <br>
+                <a type="submit" class="btn btn-primary">Bekijk</a>
+                <h2></h2>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-5 background-div">
+                <form method="get">
+                    <h1 class="centercontent">Trouw datum:</h1>
+                    <h3>@ViewData["Trouwdatum"]</h3>
+                    <h1 class="centercontent">Trouw locatie:</h1>
+                    <h3>@ViewData["Trouwlocatie"]</h3>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

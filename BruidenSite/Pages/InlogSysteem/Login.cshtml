@@ -1,0 +1,34 @@
+﻿@page
+@model BruidenSite.Pages.InlogSysteem.Login
+
+@{
+}
+
+<!DOCTYPE html>
+
+<header>
+    <link rel="stylesheet" href="~/css/Login.css"/>
+</header>
+
+<body class="background-website">
+    <div class="centerRectangle">
+        <h2>Inloggen</h2>
+        <form method="post" asp-page-handler="Login">
+            <input type="text" asp-for="checkuser.UserName" placeholder="Gebruikersnaam"/>
+            <input type="password" asp-for="checkuser.PassWord" placeholder="Wachtwoord"/> <br>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+        
+        <h6 style="margin-top: 20px; margin-bottom: -5px">Nog geen account? Druk hier om er een te maken!</h6> 
+        <a href="Register" class="btn btn-primary">Registreer</a>
+    </div>
+<div class="centerRectangle">
+    <h2>Inloggen met unieke code</h2>
+    <h6>Heeft een code ontvangen van een bruidspaar? Dan kan u deze hier invullen en hun wensenlijst bekijken.</h6>
+    <form method="post" asp-page-handler="Code">
+        <input type="text" asp-for="gastNaam" placeholder="Uw Naam">
+        <input type="text" asp-for="uniqueCode" placeholder="Unieke Code"/> <br>
+        <button class="btn btn-primary" type="submit">Login met Code</button>
+    </form>
+</div>
+</body>

@@ -1,0 +1,39 @@
+﻿@page
+@model BruidenSite.Pages.InlogSysteem.WensenLijstGast
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadeau lijst voor bruiloft</title>
+    <link rel="stylesheet" href="~/css/Overview.css">
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="background-website">
+<h1 class="kop">Cadeau lijst</h1>
+<div class="container.fluid padding">
+    <div class="row">
+        <div class="col-md-6">
+            <ul>
+                @if (Model.Presents != null)
+                {
+                    @foreach (var namen in Model.Presents)
+                    {
+                        <li class='list-group-item d-flex justify-content-between align-items-center'>
+                            @namen.CadeauNaam
+                            <input type="checkbox">
+                        </li>
+                    }
+                }
+            </ul> 
+        </div>
+        <div class="col-md-6">
+            <form method="post">
+                <button class="btn-primary btn" type="submit">Bevestigen</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>

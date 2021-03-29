@@ -1,0 +1,22 @@
+﻿@page
+@model BruidenSite.Pages.InlogSysteem.AddLocation
+
+@{
+}
+
+<!DOCTYPE html>
+
+<header>
+    <link rel="stylesheet" href="~/css/Overview.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</header>
+
+<body class="background-website">
+<div>
+    <form method="post" asp-page-handler="Location">
+        <input type="text" asp-for="LocUser.TrouwLocatie">
+        <button class="btn btn-primary" type="submit">Bevestig</button>
+    </form>
+</div>
+</body>

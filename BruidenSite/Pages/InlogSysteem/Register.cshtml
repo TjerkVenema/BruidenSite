@@ -1,0 +1,27 @@
+﻿@page
+@model BruidenSite.Pages.InlogSysteem.Register
+
+@{
+}
+
+<!DOCTYPE html>
+
+<header>
+    <link rel="stylesheet" href="~/css/Login.css"/>
+</header>
+
+<body class="background-website">
+<div class="centerRectangle">
+    <form method="post" asp-page-handler="Add">
+        <h2>Registreer</h2>
+        <input type="text" asp-for="_user.UserName" placeholder="Gebruikersnaam"/>
+        <input type="password" asp-for="_user.PassWord" placeholder="Wachtwoord"/>
+        <input type="password" asp-for="passcheck.PassWord" placeholder="Bevestig wachtwoord"/>
+        <input type="email" asp-for="_user.EMailadres" placeholder="e-mailadres"/> <br>
+        <button class="btn btn-primary" type="submit">Maak account aan</button>
+        
+        <h6 style="margin-top: 20px; margin-bottom: -5px">Heeft u al een account druk dan hier om in te loggen</h6>
+        <a href="Login" class="btn btn-primary">Login</a>
+    </form>
+</div>
+</body>

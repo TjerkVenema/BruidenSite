@@ -1,0 +1,47 @@
+﻿@page
+@model BruidenSite.Pages.InlogSysteem.WensenLijstAdd
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadeau lijst voor bruiloft</title>
+    <link rel="stylesheet" href="~/css/Overview.css">
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="background-website">
+<h1 class="kop">Cadeau lijst</h1>
+<div class="container.fluid padding">
+    <div class="row">
+        <div class="col-md-6">
+            <ul id="presentlist">
+                @if (Model.Presents != null)
+                {
+                    @foreach (var namen in Model.Presents)
+                    {
+                        <li class='list-group-item d-flex justify-content-between align-items-center'>
+                            @namen.CadeauNaam
+                            <div class='btn-group'>
+                                <button id='upbtn' class='btn btn-secondary btn-group-sm'>up</button>
+                                <button id='downbtn' class='btn btn-secondary btn-group-sm'>down</button>
+                                <button id='deletebtn' class='btn btn-secondary btn-group-sm'>delete</button>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul> 
+        </div>
+        <div class="col-md-6">
+            <form method="post" asp-page-handler="Add">
+                <input asp-for="NewPresent.CadeauNaam" type="text" id="addname" placeholder="Voeg een cadeau toe"/><br>
+                <button id="addtolist" class="btn btn-primary">Toevoegen</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
+</body>
+
+
