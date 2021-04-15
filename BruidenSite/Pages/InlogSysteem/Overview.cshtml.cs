@@ -1,19 +1,35 @@
 ﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 
 namespace BruidenSite.Pages.InlogSysteem
 {
     public class Overview : PageModel
     {
+        [BindProperty]
+        public string UniqueCode { get; set; }
+        
         public void OnGet()
         {
-            int Id = Convert.ToInt32(Request.Cookies["userId"]);
+            Response.Cookies.Delete("Date");
+        }
 
-            User user = new User(); 
-            user = Repository.GetDL(Id);
-
-            ViewData["Trouwlocatie"] = user.TrouwLocatie;
-            ViewData["Trouwdatum"] = user.TrouwDatum;
+        public IActionResult OnPostCode()
+        {
+            string code = UniqueCode;
+            WensenLijst wensenLijst = Repository.GetListIdByCode(code);
+            User user = Repository.GetById(Convert.ToInt32(Request.Cookies["userId"]));
+            if (wensenLijst == null)
+            {
+                return Page();
+            }
+            else
+            {
+                Response.Cookies.Append("gastnaam", user.UserName);
+                Response.Cookies.Append("listId", wensenLijst.WensenLijstId.ToString());
+                return RedirectToPage("/InlogSysteem/WensenLijstGast");
+            }
         }
     }
 }

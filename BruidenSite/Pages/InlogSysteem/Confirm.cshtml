@@ -2,6 +2,8 @@
 @model BruidenSite.Pages.InlogSysteem.Confirm
 
 @{
+    ViewData["Trouwlocatie"] = Request.Cookies["Location"];
+    ViewData["Trouwdatum"] = Request.Cookies["Date"];
 }
 
 <!DOCTYPE html>
@@ -13,10 +15,13 @@
 </header>
 
 <body class="background-website">
-<div>
+<div class="centerRectangle1">
     <form method="post" asp-page-handler="Confirm">
         <h1>Kloppen de gegevens?</h1>
-        <button class="btn btn-primary" type="submit">Bevestig</button>
+        <h3>Datum: @ViewData["Trouwdatum"]</h3>
+        <h3>Locatie: @ViewData["Trouwlocatie"]</h3>
+        <a href="/InlogSysteem/AddLocation" class="btn btn-primary" type="button">Terug</a>
+        <button asp-page-handler="Confirm" class="btn btn-primary" type="submit">Bevestig</button>
     </form>
 </div>
 </body>

@@ -13,10 +13,12 @@
 </header>
 
 <body class="background-website">
-<div>
-    <form method="post" asp-page-handler="Date">
-        <input type="date" asp-for="DateUser.TrouwDatum">
-        <button class="btn btn-primary" type="submit">Bevestig</button>
+<div class="centerRectangle1">
+    <h1>Voer hier uw trouwdatum in</h1>
+    <form method="post">
+        <input type="date" asp-for="DateUser.TrouwDatum" required><br>
+        <a href="/InlogSysteem/Overview" class="btn btn-primary" type="button">Terug</a>
+        <button asp-page-handler="Date" class="btn btn-primary" type="submit">Bevestig</button>
     </form>
 </div>
 </body>

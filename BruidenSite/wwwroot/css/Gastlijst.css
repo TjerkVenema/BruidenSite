@@ -1,0 +1,22 @@
+﻿.background-website5{
+    background-image:url(https://img.freepik.com/free-photo/wood-background-texture_124507-6931.jpg?size=626&ext=jpg) ;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.koppen{
+    text-align: center;
+    font-size: 200%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    margin: 10% 30%;
+}
+
+.centerRectangle5{
+    font-size: 200%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    padding: 20px;
+}

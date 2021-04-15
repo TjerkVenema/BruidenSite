@@ -61,3 +61,4 @@ C:\Users\Tjerk Venema\RiderProjects\BruidenSite\BruidenSite\obj\Debug\net5.0\Bru
 C:\Users\Tjerk Venema\RiderProjects\BruidenSite\BruidenSite\obj\Debug\net5.0\BruidenSite.genruntimeconfig.cache
 C:\Users\Tjerk Venema\RiderProjects\BruidenSite\BruidenSite\obj\Debug\net5.0\Razor\Pages\InlogSysteem\WensenLijstAdd.cshtml.g.cs
 C:\Users\Tjerk Venema\RiderProjects\BruidenSite\BruidenSite\obj\Debug\net5.0\Razor\Pages\InlogSysteem\WensenLijstGast.cshtml.g.cs
+C:\Users\Tjerk Venema\RiderProjects\BruidenSite\BruidenSite\obj\Debug\net5.0\Razor\Pages\Shared\_Wensenlijst.cshtml.g.cs

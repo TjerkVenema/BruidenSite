@@ -14,8 +14,10 @@
     <div class="centerRectangle">
         <h2>Inloggen</h2>
         <form method="post" asp-page-handler="Login">
-            <input type="text" asp-for="checkuser.UserName" placeholder="Gebruikersnaam"/>
-            <input type="password" asp-for="checkuser.PassWord" placeholder="Wachtwoord"/> <br>
+            <input type="text" asp-for="checkuser.UserName" placeholder="Gebruikersnaam" required/>
+            
+            <input type="password" asp-for="checkuser.PassWord" placeholder="Wachtwoord" required/> <br>
+            
             <button class="btn btn-primary" type="submit">Login</button>
         </form>
         
@@ -26,8 +28,8 @@
     <h2>Inloggen met unieke code</h2>
     <h6>Heeft een code ontvangen van een bruidspaar? Dan kan u deze hier invullen en hun wensenlijst bekijken.</h6>
     <form method="post" asp-page-handler="Code">
-        <input type="text" asp-for="gastNaam" placeholder="Uw Naam">
-        <input type="text" asp-for="uniqueCode" placeholder="Unieke Code"/> <br>
+        <input type="text" asp-for="gastNaam" placeholder="Uw Naam" required>
+        <input type="text" asp-for="uniqueCode" placeholder="Unieke Code" required/> <br>
         <button class="btn btn-primary" type="submit">Login met Code</button>
     </form>
 </div>

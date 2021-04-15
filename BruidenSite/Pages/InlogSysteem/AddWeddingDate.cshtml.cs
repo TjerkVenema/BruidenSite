@@ -20,7 +20,7 @@ namespace BruidenSite.Pages.InlogSysteem
         
         public void OnGet()
         {
-            
+            Response.Cookies.Delete("Date");
         }
     }
 }

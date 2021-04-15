@@ -24,7 +24,7 @@ namespace BruidenSite.Pages.InlogSysteem
 
         public IActionResult OnPostAdd()
         {
-            if (_user.UserName != null && _user.EMailadres != null && _user.PassWord == passcheck.PassWord)
+            if (ModelState.IsValid && _user.PassWord == passcheck.PassWord)
             {
                 User _newUser = new User();
                 WensenLijst _newWensenLijst = new WensenLijst();

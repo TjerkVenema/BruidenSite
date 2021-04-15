@@ -1,7 +1,21 @@
 ﻿@page
+@using BruidenSite.Pages.Shared
 @model BruidenSite.Pages.InlogSysteem.WensenLijstAdd
 
+@{
+    Layout = "Shared/_Wensenlijst";
+}
+@{
+    User user = Repository.GetById(Convert.ToInt32(Request.Cookies["userId"]));
+    WensenLijst list = Repository.GetListIduser(Convert.ToInt32(Request.Cookies["userId"]));
+    string uniqueId = Repository.GetListCodeById(list.WensenLijstId);
+    ViewData["uniqueId"] = uniqueId;
+    ViewData["trouwdatum"] = user.TrouwDatum;
+    ViewData["trouwlocatie"] = user.TrouwLocatie;
+}
+
 <!DOCTYPE html>
+
 
 <head>
     <meta charset="UTF-8">
@@ -11,37 +25,56 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
+
 <body class="background-website">
-<h1 class="kop">Cadeau lijst</h1>
-<div class="container.fluid padding">
+<div class="container-fluid">
+    <div class="background-List">
+        <h1>Cadeau lijst</h1>
+    </div>
     <div class="row">
-        <div class="col-md-6">
-            <ul id="presentlist">
+        <div class="col-6">
+            <ul>
                 @if (Model.Presents != null)
                 {
-                    @foreach (var namen in Model.Presents)
+                    @foreach (var naam in Model.Presents)
                     {
-                        <li class='list-group-item d-flex justify-content-between align-items-center'>
-                            @namen.CadeauNaam
-                            <div class='btn-group'>
-                                <button id='upbtn' class='btn btn-secondary btn-group-sm'>up</button>
-                                <button id='downbtn' class='btn btn-secondary btn-group-sm'>down</button>
-                                <button id='deletebtn' class='btn btn-secondary btn-group-sm'>delete</button>
-                            </div>
-                        </li>
+                        <form method="post">
+                            <input asp-for="cadId" value="@naam.CadeauId" type="hidden">
+                            <li class='list-group-item d-flex justify-content-between align-items-center'>
+                                @naam.CadeauNaam
+                                <div class='btn-group'>
+                                    @if (naam.Koper == null)
+                                    {
+                                        <a class="btn btn-secondary btn-group-sm" style="color: white">Gekocht door: Niemand</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-secondary btn-group-sm" style="color: white">Gekocht door: @naam.Koper</a>
+                                    }
+                                    <button asp-page-handler="Up" class='btn btn-secondary btn-group-sm'>up</button>
+                                    <button asp-page-handler="Down" class='btn btn-secondary btn-group-sm'>down</button>
+                                    <button asp-page-handler="Delete" class='btn btn-secondary btn-group-sm'>delete</button>
+                                </div>
+                            </li>
+                        </form>
                     }
                 }
-            </ul> 
+            </ul>
         </div>
-        <div class="col-md-6">
+        <div class="col-2">
             <form method="post" asp-page-handler="Add">
-                <input asp-for="NewPresent.CadeauNaam" type="text" id="addname" placeholder="Voeg een cadeau toe"/><br>
-                <button id="addtolist" class="btn btn-primary">Toevoegen</button>
+                <input asp-for="NewPresent.CadeauNaam" type="text" placeholder="Voeg een cadeau toe" required value=""/><br>
+                <button class="btn btn-primary">Toevoegen</button>
             </form>
-            
+        </div>
+        <div class="col-4">
+            <div class="background-item">
+                <h2>Unieke Code: @ViewData["uniqueId"]</h2>
+                <h2>Trouw Datum: @ViewData["trouwdatum"]</h2>
+                <h2>Trouw Locatie: @ViewData["trouwlocatie"]</h2>
+            </div>
         </div>
     </div>
 </div>
 </body>
-
 

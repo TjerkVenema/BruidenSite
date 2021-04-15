@@ -1,39 +1,66 @@
 ﻿@page
 @model BruidenSite.Pages.InlogSysteem.WensenLijstGast
 
+@{
+    User user = Repository.GetUserByListId(Convert.ToInt32(Request.Cookies["listId"]));
+    string uniqueId = Repository.GetListCodeById(Convert.ToInt32(Request.Cookies["listId"]));
+    ViewData["gastnaam"] = Request.Cookies["gastnaam"];
+    ViewData["uniqueId"] = uniqueId;
+    ViewData["trouwdatum"] = user.TrouwDatum;
+    ViewData["trouwlocatie"] = user.TrouwLocatie;
+}
+
 <!DOCTYPE html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadeau lijst voor bruiloft</title>
-    <link rel="stylesheet" href="~/css/Overview.css">
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/css/Gastlijst.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 
-<body class="background-website">
-<h1 class="kop">Cadeau lijst</h1>
-<div class="container.fluid padding">
-    <div class="row">
-        <div class="col-md-6">
-            <ul>
-                @if (Model.Presents != null)
-                {
-                    @foreach (var namen in Model.Presents)
+<body class="background-website5">
+<h1 class="koppen">Cadeau lijst</h1>
+<div class="container.fluid">
+    
+    <form method="post">
+        
+        <div class="row">
+
+            <div class="col-5">
+                <ul class="list-group">
+                    <li class="list-group-item active">Cadeaus</li>
+                    @if (Model.Presents != null)
                     {
-                        <li class='list-group-item d-flex justify-content-between align-items-center'>
-                            @namen.CadeauNaam
-                            <input type="checkbox">
-                        </li>
+                        @foreach (var naam in Model.Presents)
+                        {
+                            <li class='list-group-item d-flex justify-content-between align-items-center'>
+                                @naam.CadeauNaam
+                                <input type="checkbox" value="@naam.CadeauId" name="AreChecked">
+                            </li>
+                        }
                     }
-                }
-            </ul> 
+                </ul>
+            </div>
+
+            <div class="col-2">
+                <button asp-page-handler="Submit" class="btn-primary btn" type="submit">Bevestigen</button>
+            </div>
+
+            <div class="col-5">
+                <div class="centerRectangle5">
+                    <h2>Uw naam: @ViewData["gastnaam"]</h2>
+                    <h2>Unieke Code: @ViewData["uniqueId"]</h2>
+                    <h2>Trouw Datum: @ViewData["trouwdatum"]</h2>
+                    <h2>Trouw Locatie: @ViewData["trouwlocatie"]</h2>
+                </div>
+            </div>
+
         </div>
-        <div class="col-md-6">
-            <form method="post">
-                <button class="btn-primary btn" type="submit">Bevestigen</button>
-            </form>
-        </div>
-    </div>
+        
+    </form>
+    
 </div>
+
 </body>

@@ -16,7 +16,7 @@ namespace BruidenSite.Pages
             return new MySqlConnection(
                 "Server=127.0.0.1;Port=3306;" +
                 ";Database=bruidensite;" +
-                "Uid=root;Pwd=Umbrio-Lanka100;"
+                "Uid=root;Pwd=Test12345;"
             );
         }
 
@@ -118,7 +118,7 @@ namespace BruidenSite.Pages
         {
             using var connection = Connect(); 
             var listcadeau = connection.Query<Cadeau>(
-                "SELECT * FROM cadeau WHERE WensenlijstId = @WensenlijstId",
+                "SELECT * FROM cadeau WHERE WensenlijstId = @WensenlijstId ORDER BY Prioriteit desc",
                 new {WensenlijstId = wensenlijstId}
             );
             return listcadeau.ToList();
@@ -128,11 +128,13 @@ namespace BruidenSite.Pages
         {
             using var connection = Connect();
             var cadeau = connection.Execute(
-                "INSERT INTO cadeau(Cadeaunaam, WensenlijstId) values (@Cadeaunaam, @WensenlijsId)",
+                "INSERT INTO cadeau(Cadeaunaam, WensenlijstId, Prioriteit, Done) values (@Cadeaunaam, @WensenlijsId, @Prioriteit, @Done)",
                 new
                 {
                     Cadeaunaam = newCadeau.CadeauNaam,
-                    WensenlijsId = newCadeau.WensenlijstId
+                    WensenlijsId = newCadeau.WensenlijstId,
+                    Prioriteit = newCadeau.Prioriteit,
+                    Done = 0
                 });
         }
 
@@ -143,6 +145,132 @@ namespace BruidenSite.Pages
                 "SELECT WensenlijstId FROM wensenlijst WHERE UniqueId = @UniqueId",
                 new {UniqueId = uniquecode});
             return listId;
+        }
+
+        public static void RemoveListItem(int cadeauId, int wensenlijstId)
+        {
+            using var connection = Connect();
+
+            var prio = GetPrioByCadeauId(cadeauId);
+            
+            connection.Execute(
+                "DELETE FROM cadeau WHERE CadeauId = @CadeauId",
+                new
+                {
+                    CadeauId = cadeauId
+                });
+            
+            var list = GetCadeausByListId(wensenlijstId);
+            foreach (var a in list)
+            {
+                if (a.Prioriteit < prio)
+                {
+                    connection.Execute(
+                        "UPDATE cadeau SET Prioriteit = @Prioriteit WHERE CadeauId = @CadeauId",
+                        new 
+                        {
+                            Prioriteit = a.Prioriteit + 1,
+                            CadeauId = a.CadeauId
+                        });
+                }
+            }
+        }
+
+        public static int GetPrioByCadeauId(int cadeauId)
+        {
+            using var connetion = Connect();
+            int prio = connetion.QuerySingleOrDefault<int>(
+                "SELECT Prioriteit FROM cadeau WHERE CadeauId = @CadeauId",
+                new
+                {
+                    CadeauId = cadeauId
+                });
+            return prio;
+        }
+
+        public static void UpdatePrioUp(int cadeauId, int wensenlijstId)
+        {
+            using var connection = Connect();
+            var list = GetCadeausByListId(wensenlijstId);
+            int index = list.FindIndex(a => a.CadeauId == cadeauId);
+            if (index != 0)
+            {
+                connection.Execute(
+                    "UPDATE cadeau SET Prioriteit = @Prioriteit WHERE CadeauId = @CadeauId",
+                    new {
+                        Prioriteit = GetPrioByCadeauId(cadeauId) + 1,
+                        CadeauId = cadeauId
+                    });
+                
+                connection.Execute(
+                    "UPDATE cadeau SET Prioriteit = @Prioriteit WHERE CadeauId = @CadeauId",
+                    new
+                    {
+                        Prioriteit = list[index - 1].Prioriteit - 1,
+                        CadeauId = list[index - 1].CadeauId 
+                    });
+            }
+        }
+
+        public static void UpdatePrioDown(int cadeauId, int wensenlijstId)
+        {
+            using var connection = Connect();
+            var list = GetCadeausByListId(wensenlijstId);
+            int index = list.FindIndex(a => a.CadeauId == cadeauId);
+            int total = list.Count -1;
+            if (index != total)
+            {
+                connection.Execute(
+                    "UPDATE cadeau SET Prioriteit = @Prioriteit WHERE CadeauId = @CadeauId",
+                    new {
+                        Prioriteit = GetPrioByCadeauId(cadeauId) - 1,
+                        CadeauId = cadeauId
+                    });
+                
+                connection.Execute(
+                    "UPDATE cadeau SET Prioriteit = @Prioriteit WHERE CadeauId = @CadeauId",
+                    new
+                    {
+                        Prioriteit = list[index + 1].Prioriteit + 1,
+                        CadeauId = list[index + 1].CadeauId 
+                    });
+            }
+        }
+
+        public static void UpdateDoneAndBuyer(List<int> cadeauId, string Buyername)
+        {
+            using var connection = Connect();
+            foreach (var Id in cadeauId)
+            {
+                connection.Execute(
+                    "UPDATE cadeau SET Done = @Done, Koper = @Koper WHERE CadeauId = @CadeauId",
+                    new
+                    {
+                        Done = 1,
+                        Koper = Buyername, 
+                        CadeauId = Id
+                    });
+            }
+        }
+
+        public static User GetUserByListId(int listId)
+        {
+            using var connection = Connect();
+            var user = connection.QuerySingleOrDefault<User>(
+                "SELECT TrouwDatum, TrouwLocatie FROM user WHERE WensenlijstId = @ListId",
+                new
+                {
+                    ListId = listId
+                });
+            return user;
+        }
+        public static string GetListCodeById(int listId)
+        {
+            using var connection = Connect();
+            var uniqueId = connection.QuerySingleOrDefault<string>(
+                "SELECT UniqueId FROM wensenlijst WHERE WensenlijstId = @WensenlijstId",
+                new {WensenlijstId = listId});
+            return uniqueId;
         }
     }
 }

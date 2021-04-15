@@ -20,9 +20,9 @@ namespace BruidenSite.Pages.InlogSysteem
         {
              string username1 = checkuser.UserName;
              string password = checkuser.PassWord;
-             if (username1 == null || password == null)
+             if (!ModelState.IsValid)
              {
-                 return Redirect("/InlogSysteem/Login");
+                 return Page();
              }
 
              User user = Repository.Login(username1, password);

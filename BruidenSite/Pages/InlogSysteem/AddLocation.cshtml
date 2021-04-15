@@ -13,10 +13,13 @@
 </header>
 
 <body class="background-website">
-<div>
-    <form method="post" asp-page-handler="Location">
-        <input type="text" asp-for="LocUser.TrouwLocatie">
-        <button class="btn btn-primary" type="submit">Bevestig</button>
+<div class="centerRectangle1">
+    <h1>Voer hier uw trouwlocatie in</h1>
+    <form method="post">
+        <input type="text" asp-for="LocUser.TrouwLocatie" required><br>
+        <a href="/InlogSysteem/AddWeddingDate" class="btn btn-primary" type="button">Terug</a>
+        <button asp-page-handler="Location" class="btn btn-primary" type="submit">Bevestig</button>
     </form>
+    
 </div>
 </body>

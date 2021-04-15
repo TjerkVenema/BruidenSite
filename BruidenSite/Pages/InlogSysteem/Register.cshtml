@@ -12,13 +12,16 @@
 
 <body class="background-website">
 <div class="centerRectangle">
-    <form method="post" asp-page-handler="Add">
+    <form method="post" >
         <h2>Registreer</h2>
-        <input type="text" asp-for="_user.UserName" placeholder="Gebruikersnaam"/>
-        <input type="password" asp-for="_user.PassWord" placeholder="Wachtwoord"/>
-        <input type="password" asp-for="passcheck.PassWord" placeholder="Bevestig wachtwoord"/>
-        <input type="email" asp-for="_user.EMailadres" placeholder="e-mailadres"/> <br>
-        <button class="btn btn-primary" type="submit">Maak account aan</button>
+        <input type="text" asp-for="_user.UserName" placeholder="Gebruikersnaam" required/><br>
+        <span asp-validation-for="_user.UserName"></span><br>
+        <input type="password" asp-for="_user.PassWord" placeholder="Wachtwoord" required/><br>
+        <span asp-validation-for="_user.PassWord"></span><br>
+        <input type="password" asp-for="passcheck.PassWord" placeholder="Bevestig wachtwoord" required/><br>
+        <span></span><br>
+        <input type="email" asp-for="_user.EMailadres" placeholder="Emailadres" required/> <br>
+        <button asp-page-handler="Add" class="btn btn-primary" type="submit">Maak account aan</button>
         
         <h6 style="margin-top: 20px; margin-bottom: -5px">Heeft u al een account druk dan hier om in te loggen</h6>
         <a href="Login" class="btn btn-primary">Login</a>

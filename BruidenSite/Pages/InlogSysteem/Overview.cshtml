@@ -2,40 +2,49 @@
 @model BruidenSite.Pages.InlogSysteem.Overview
 
 @{
+    int Id = Convert.ToInt32(Request.Cookies["userId"]);
+    User user = new User(); 
+    user = Repository.GetDL(Id);
+
+    ViewData["Trouwlocatie"] = user.TrouwLocatie;
+    ViewData["Trouwdatum"] = user.TrouwDatum;
 }
 
 <!DOCTYPE html>
 
-<header>
+<head>
     <link rel="stylesheet" href="~/css/Overview.css"/>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</header>
+    <title>hoi</title>
+</head>
 
 <body class="background-website">
-    <div class="centerRectangle">
-        <h1 class="kop">Fijne Bruiloft</h1>   
+    <div class="kop">
+        <h1>Fijne Bruiloft</h1>   
     </div>
     <div class="container.fluid padding-top">
         <div class="row">
-            <div class="col-5 background-div">
-                <h1 class="centercontent">WensenLijst</h1>
+            <div class="col-5">
+                <div class="background-item">
+                <h1>WensenLijst</h1>
                 <h6>klik hier om uw wensenlijst te bekijken</h6>
-                <a class="btn btn-primary" href="/InlogSysteem/WensenLijstAdd" >Bekijk</a>
-                
+                <a class="btn btn-primary" href="/InlogSysteem/WensenLijstAdd">Bekijk</a>
+
                 <h6>Wilt u de wensenlijst van iemand anders bekijken? vul dan hier hun unieke code in</h6>
-                <input type="text" placeholder="Unieke code"/> <br>
-                <a type="submit" class="btn btn-primary">Bekijk</a>
-                <h2></h2>
+                <form method="post">
+                    <input asp-for="UniqueCode" type="text" placeholder="Unieke code" required/> <br>
+                    <button asp-page-handler="Code" type="submit" class="btn btn-primary">Bekijk</button>
+                </form>
+                </div>
             </div>
             <div class="col-2"></div>
-            <div class="col-5 background-div">
-                <form method="get">
-                    <h1 class="centercontent">Trouw datum:</h1>
-                    <h3>@ViewData["Trouwdatum"]</h3>
-                    <h1 class="centercontent">Trouw locatie:</h1>
-                    <h3>@ViewData["Trouwlocatie"]</h3>
-                </form>
+            <div class="col-5 background-item">
+                <h1>Trouw datum:</h1>
+                <h3>@ViewData["Trouwdatum"]</h3>
+                <h1>Trouw locatie:</h1>
+                <h3>@ViewData["Trouwlocatie"]</h3>
+                <a class="btn btn-primary" href="/InlogSysteem/AddWeddingDate">verander</a>
             </div>
         </div>
     </div>

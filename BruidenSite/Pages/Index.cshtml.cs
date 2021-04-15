@@ -19,6 +19,7 @@ namespace BruidenSite.Pages
 
         public RedirectToPageResult OnGet()
         {
+            Response.Cookies.Delete("listId");
             string Id = Request.Cookies["userId"];
             if (Id != null)
             {
